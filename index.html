@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Web Page</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <script src="script.js"></script>
+</head>
+<body>
+    <h1>Welcome to My Web Page</h1>
+
+    <p>This is a simple web page with formatted text and dialogue boxes.</p>
+
+    <div id="chat-container">
+        <!-- Chat messages will be displayed here -->
+    </div>
+
+    <input type="text" id="user-input" placeholder="Type your message...">
+    <button id="sendButton">Send</button>
+
+    <script>
+
+        const sendButton = document.getElementById("sendButton");
+
+        // Add event listener to the dialogue button
+        sendButton.addEventListener("click", function () {
+            sendMessage();
+        });
+    </script>
+</body>
+</html>
