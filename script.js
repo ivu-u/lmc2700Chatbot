@@ -11,7 +11,6 @@ app.get('/', (req, res) => {
 });
 
 app.use(express.json());
-app.use(express.static('public'));
 
 // Set the desired port number
 const port = 3000;
