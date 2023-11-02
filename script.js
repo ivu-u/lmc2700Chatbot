@@ -1,60 +1,55 @@
 const express = require('express');
 const app = express();
-const OpenAI = require('openai');
-const apiKey = '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'; // Replace with your actual API key
-const openai = new OpenAI({ apiKey });
-
-// Serve your HTML page when accessing the root URL
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html');
-});
 
 app.use(express.json());
 app.use(express.static('public'));
 
+
 // Set the desired port number
-const port = 3000;
+const port = 4000;
 
 // Start the server
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
 
+// // Serve your HTML page when accessing the root URL
+// app.get('/', (req, res) => {
+//     res.sendFile(__dirname + '/index.html');
+// });
 
-// Function to send a message to OpenAI and get a response
-// This is wrong
-async function sendMessage() {
-    // Get the user's message from the input field
-    const userMessage = document.getElementById("user-input").value;
+// Serve your HTML page when accessing the root URL
+app.get('/api/question', (req, res) => {
+    const question = req.query.q;
+    generateChatbotResponse(question).then(result => {
+        res.send(result);
+    });
+});
 
-    // Clear the input field
-    document.getElementById("user-input").value = "";
 
-    // Display the user's message in the chat container
-    displayMessage("You: " + userMessage);
+// Your OpenAI configuration and functions should be defined here
+const apiKey = "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";
 
-    // Make a request to OpenAI's GPT-3 API to get a response
-    const response = await generateChatbotResponse(userMessage, apiKey);
+const openai = new OpenAI(apiKey);
 
-    // Display the chatbot's response
-    displayMessage("Chatbot: " + response);
+function placeHolder(question) {
+    return "The answer to " + question + " is ....";
 }
 
 // Function to generate a response from the chatbot
-async function generateChatbotResponse(userMessage, apiKey) {
-    app.post('/api/chat'), async (req, res) => {
-        const userInput = req.body.userInput;
-        const response = await openai.chat.completions.create
-        }
+async function generateChatbotResponse(question) {
+
+    const response = await openai.chat.completions.create({
+        model: "gpt-3.5-turbo",
+        messages: [{"role": "system", "content": "You are a helpful assistant."},
+            {"role": "user", "content": "Who won the world series in 2020?"},
+            {"role": "assistant", "content": "The Los Angeles Dodgers won the World Series in 2020."},
+            {"role": "user", "content": "Where was it played?"}],
+      });
+    
+      return response.choices[0];
     }
 
-    
-// Function to display a message in the chat container
-function displayMessage(message) {
-    var chatContainer = document.getElementById("chat-container");
-    var messageElement = document.createElement("p");
-    messageElement.textContent = message;
-    chatContainer.appendChild(messageElement);
-}
+
 
 
