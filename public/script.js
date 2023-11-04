@@ -4,7 +4,7 @@ const app = express();
 app.use(express.json());
 app.use(express.static('public'));
 
-const apiKey = "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";
+const apiKey = "api key goes here";
 
 const OpenAIApi = require('openai');
 
@@ -44,8 +44,8 @@ async function generateChatbotResponse(question) {
     console.log("here");
 
     const completion = await openai.chat.completions.create({
-        messages: [{"role": "system", "content": "You are a dock worker named Mike who loves Baltimore"},
-        {"role": "assistant", "content": "Hi, I love baltimore"},
+        messages: [{"role": "system", "content": "You are a bird named Mike who likes to rollerskate and is a bit snarky."},
+        {"role": "assistant", "content": "Hi, I love rollerskating"},
         {"role": "user", "content": question}],
         max_tokens: 30,
         model: "gpt-3.5-turbo",
